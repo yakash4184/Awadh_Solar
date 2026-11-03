@@ -1,0 +1,11 @@
+'use client'
+import dynamic from 'next/dynamic'
+import { Component, useEffect, useRef, useState, type ReactNode } from 'react'
+import { T } from '@/components/language/LanguageProvider'
+const Scene = dynamic(()=>import('@/components/hero/Hero3DScene'),{ssr:false})
+class SceneBoundary extends Component<{children:ReactNode;fallback:ReactNode},{failed:boolean}> { state={failed:false};static getDerivedStateFromError(){return {failed:true}};render(){return this.state.failed?this.props.fallback:this.props.children} }
+export function SceneLoader({ kind, poster }: {kind?:string;poster:string}) {const root=useRef<HTMLDivElement>(null);const [enabled,setEnabled]=useState(false);const [active,setActive]=useState(false)
+ useEffect(()=>{const node=root.current;if(!node)return;const n=navigator as Navigator&{deviceMemory?:number;connection?:{saveData?:boolean;effectiveType?:string}};const media=matchMedia('(prefers-reduced-motion: reduce)');let supported=false;try{const c=document.createElement('canvas');const gl=c.getContext('webgl2');supported=Boolean(gl);gl?.getExtension('WEBGL_lose_context')?.loseContext()}catch{};const allowed=supported&&!media.matches&&!n.connection?.saveData&&(n.deviceMemory??8)>2&&(n.hardwareConcurrency??8)>2;const observer=new IntersectionObserver(([entry])=>{setActive(entry.isIntersecting&&!document.hidden);if(entry.isIntersecting&&allowed)setEnabled(true)},{rootMargin:'80px'});observer.observe(node);const visibility=()=>setActive(!document.hidden&&node.getBoundingClientRect().bottom>0&&node.getBoundingClientRect().top<innerHeight);const reduce=()=>{if(media.matches)setEnabled(false)};document.addEventListener('visibilitychange',visibility);media.addEventListener('change',reduce);return()=>{observer.disconnect();document.removeEventListener('visibilitychange',visibility);media.removeEventListener('change',reduce)}},[])
+ const fallback=<img className="scene-poster" src={poster} alt=""/>
+ return <div className={kind?'product-scene':'hero-scene'} ref={root}>{fallback}{enabled&&<SceneBoundary fallback={fallback}><div className="canvas-layer" aria-hidden="true"><Scene active={active} kind={kind}/></div></SceneBoundary>}{kind&&<small className="model-caption"><T hi="सांकेतिक मॉडल · घुमाने के लिए खींचें">Concept model · drag to rotate</T></small>}</div>
+}

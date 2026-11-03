@@ -1,0 +1,35 @@
+AWADH ENTERPRISES — GOOGLE SHEETS ENQUIRIES / पूछताछ प्रबंधन
+
+1. Sign in to the Awadh Google account and create a Google Sheet at https://sheets.new.
+   Optional: create a Google Form at https://forms.new and link it to this Sheet from its Responses tab.
+2. In the linked Sheet, open Extensions > Apps Script and paste the script below.
+3. In Project Settings > Script Properties add ENQUIRY_TOKEN with a random secret of at least 24 characters.
+   Enter that same secret in Admin > Enquiries. The script creates an Enquiries tab for website popup leads.
+4. Deploy > New deployment > Web app. Execute as: Me. Access: Anyone.
+5. Copy the /exec URL into Admin > Enquiries, enter the same secret, enable the integration, and press Save integration.
+6. Submit a test enquiry and verify the Enquiries tab in the Sheet. After editing the script, update the deployment version.
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    const input = JSON.parse(e.postData.contents);
+    const props = PropertiesService.getScriptProperties();
+    const token = props.getProperty('ENQUIRY_TOKEN');
+    if (!token || token.length < 24 || input.token !== token) throw new Error('Unauthorized');
+    if (!input.consent || !/^[6-9][0-9]{9}$/.test(input.phone)) throw new Error('Invalid input');
+    const book = SpreadsheetApp.openById(props.getProperty('SHEET_ID'));
+    const sheet = book.getSheetByName('Enquiries') || book.insertSheet('Enquiries');
+    if (!sheet.getLastRow()) sheet.appendRow(['Lead ID', 'Received at', 'Name', 'Phone', 'Requirement', 'Monthly bill', 'City / locality', 'Consent', 'Source']);
+    const safe = value => "'" + String(value || '').slice(0, 200);
+    sheet.appendRow([safe(input.leadId), new Date(), safe(input.name), safe(input.phone), safe(input.requirement), safe(input.billRange), safe(input.locality), 'Yes', 'Website popup']);
+    SpreadsheetApp.flush();
+    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ok:false})).setMimeType(ContentService.MimeType.JSON);
+  } finally { if (lock.hasLock()) lock.releaseLock(); }
+}
+
+The endpoint and secret are server-only, stored separately from public site content.
+Only the signed-in administrator can change these settings.
+For production with several server instances, configure upstream rate limiting.

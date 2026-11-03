@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+.env*
+!.env.example
+data/site-content.json
+data/uploads/
+*.tsbuildinfo
+
+# Private enquiry records and integration secrets
+data/
+.DS_Store
