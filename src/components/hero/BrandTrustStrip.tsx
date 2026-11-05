@@ -1,8 +1,5 @@
-import { ArrowRight, BadgeCheck, CircleDollarSign, Grid2x2, Sun } from 'lucide-react'
+import { BadgeCheck, CircleDollarSign, Grid2x2, Sun } from 'lucide-react'
 import { T } from '@/components/language/LanguageProvider'
-import { EnquiryTriggerButton } from '@/components/ui/EnquiryTriggerButton'
-
-const brands = ['WAAREE', 'HAVELLS', 'UTL', 'LOOM', 'DURSOLE', 'PAHAL', 'V SOLE']
 
 export function BrandTrustStrip() {
   return (
@@ -19,16 +16,6 @@ export function BrandTrustStrip() {
           </div>
         </div>
 
-        <div className="brand-trust-panel">
-          <span className="brand-trust-label"><T hi="हमारे प्रीमियम ब्रांड">OUR PREMIUM BRANDS</T></span>
-          <ul className="brand-trust-list" aria-label="WAAREE, Havells, UTL, Loom, Dursole, Pahal and V Sole">
-            {brands.map((brand) => <li key={brand}>{brand}</li>)}
-          </ul>
-          <p className="brand-trust-note"><T hi="उपलब्धता और अधिकृत उत्पाद विकल्प की पुष्टि कोटेशन के समय करें। बिजली बिल में बचत और लागत वापसी सिस्टम, उपयोग, टैरिफ और साइट पर निर्भर है।">Confirm product availability and authorized options at quotation. Bill savings and payback depend on system design, usage, tariffs and site conditions.</T></p>
-          <EnquiryTriggerButton className="brand-trust-cta">
-            <T hi="अपनी साइट के लिए कोटेशन पाएं">Get a site-specific quote</T><ArrowRight size={16} aria-hidden="true" />
-          </EnquiryTriggerButton>
-        </div>
       </div>
     </section>
   )

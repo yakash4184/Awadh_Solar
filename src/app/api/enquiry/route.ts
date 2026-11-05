@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getEnquirySettings } from '@/lib/enquiry-settings'
+import { getWhatsAppUrl } from '@/lib/whatsapp'
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import path from 'node:path'
 
@@ -144,7 +145,7 @@ export async function POST(request: Request) {
     }
 
     // Format WhatsApp follow-up link for instant 1-click booking
-    const waText = encodeURIComponent(
+    const whatsappUrl = getWhatsAppUrl(
       `Hello Awadh Solar Team! I submitted an enquiry on your website.\n` +
       `Lead ID: ${leadId}\n` +
       `Name: ${name}\n` +
@@ -154,7 +155,6 @@ export async function POST(request: Request) {
       `City: ${locality}\n` +
       `Please schedule my free rooftop survey.`
     )
-    const whatsappUrl = `https://wa.me/918953069011?text=${waText}`
 
     return NextResponse.json({
       ok: true,

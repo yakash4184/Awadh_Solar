@@ -16,12 +16,12 @@ import {
 } from 'lucide-react'
 import { T } from '@/components/language/LanguageProvider'
 import { EnquiryTriggerButton } from '@/components/ui/EnquiryTriggerButton'
+import { getWhatsAppUrl } from '@/lib/whatsapp'
 
 type FooterProps = { brand: string; phone: string; address: string }
 
 export function Footer({ brand = 'Over The Top Solar', phone = '89530 69011', address }: FooterProps) {
   const digits = phone.replace(/\D/g, '')
-  const whatsappNumber = digits.startsWith('91') ? digits : `91${digits}`
 
   return (
     <footer className="site-footer" role="contentinfo" id="contact">
@@ -168,9 +168,9 @@ export function Footer({ brand = 'Over The Top Solar', phone = '89530 69011', ad
             </a>
 
             <a
-              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+              href={getWhatsAppUrl(
                 'Hello! I would like to get a free solar quote for my property.'
-              )}`}
+              )}
               target="_blank"
               rel="noreferrer"
               className="footer-action-wa"

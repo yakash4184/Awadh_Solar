@@ -30,7 +30,6 @@ import {
 } from 'lucide-react'
 import { Hero } from '@/components/hero/Hero'
 import { BrandTrustStrip } from '@/components/hero/BrandTrustStrip'
-import { ImpactStats } from '@/components/experience/ImpactStats'
 import { ProjectShowcase } from '@/components/projects/ProjectShowcase'
 import { Navigation } from '@/components/navigation/Navigation'
 import { getSiteContent } from '@/lib/site-content'
@@ -130,9 +129,7 @@ export default async function HomePage() {
 
         <BrandTrustStrip />
 
-        {/* Animated, published business impact figures */}
         <SchemeDeadline />
-        <ImpactStats />
 
         <ProjectShowcase projects={content.projects} heading={content.projectsHeading} subheading={content.projectsSubheading} canEdit={canEditProjects} />
 

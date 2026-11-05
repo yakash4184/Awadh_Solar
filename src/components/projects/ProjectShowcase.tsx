@@ -124,8 +124,7 @@ export function ProjectShowcase({ projects, heading, subheading, canEdit = false
   return (
     <section id="projects-showcase" className="projects-showcase-section" aria-labelledby="showcase-heading">
       <div className="section-heading">
-        <span className="eyebrow"><Zap size={14} className="text-blue-600 inline mr-1" /><T hi="🏗️ हमारे Projects">OUR PROJECTS</T></span>
-        <h2 id="showcase-heading">{title}</h2>
+        <span id="showcase-heading" className="eyebrow"><Zap size={14} className="text-blue-600 inline mr-1" /><T hi="🏗️ हमारे Projects">OUR PROJECTS</T></span>
         <p>{intro}</p>
         <div className="project-edit-entry">
           {canEdit && tabSessionActive && <button type="button" onClick={openEditor} aria-label="Edit projects" title="Edit projects"><Pencil size={17}/> <span>Edit projects</span></button>}
@@ -183,7 +182,7 @@ export function ProjectShowcase({ projects, heading, subheading, canEdit = false
           <header className="project-editor-header"><div><span>HOMEPAGE PROJECTS</span><h2 id="project-editor-title">Manage your projects</h2><p>Add photos and edit the details customers see.</p></div><button type="button" className="project-editor-close" onClick={closeEditor} aria-label="Close editor"><X/></button></header>
           {demoMode && <div className="project-editor-demo-note"><b>Demo content</b><span>These sample cards are visible in the Projects section. Replace their photos and details with your real installation information whenever ready.</span></div>}
           <div className="project-enquiry-settings"><div><b>Google Form &amp; Sheet connection</b><p>Choose where website popup enquiries are saved. Admin login is required to change settings.</p></div><a href="/admin/enquiries"><LockKeyhole size={16}/> Manage enquiry links →</a></div>
-          <div className="project-editor-section-fields"><label>Section heading<input value={title} onChange={e => setTitle(e.target.value)} maxLength={140}/></label><label>Section description<textarea value={intro} onChange={e => setIntro(e.target.value)} maxLength={500} rows={2}/></label></div>
+          <div className="project-editor-section-fields"><label>Section description<textarea value={intro} onChange={e => setIntro(e.target.value)} maxLength={500} rows={2}/></label></div>
           <div className="project-editor-toolbar"><div className="project-editor-tabs">{categories.map(category => <button type="button" key={category} className={filter === category ? 'active' : ''} onClick={() => setFilter(category)}>{category}</button>)}</div><button type="button" className="project-editor-add" onClick={addProject}><Plus size={17}/> Add project</button></div>
           <div className="project-editor-list">{items.map((project, index) => <article className="project-editor-card" key={project.id}>
             <div className="project-editor-card-head"><b>Project {index + 1}</b><div><button type="button" aria-label="Move project up" disabled={index === 0} onClick={() => setItems(current => { const next=[...current]; [next[index-1],next[index]]=[next[index],next[index-1]]; return next })}><ArrowUp size={16}/></button><button type="button" aria-label="Move project down" disabled={index === items.length-1} onClick={() => setItems(current => { const next=[...current]; [next[index+1],next[index]]=[next[index],next[index+1]]; return next })}><ArrowDown size={16}/></button><button type="button" className="delete" onClick={() => setItems(current => current.filter(item => item.id !== project.id))}><Trash2 size={15}/> Delete</button></div></div>

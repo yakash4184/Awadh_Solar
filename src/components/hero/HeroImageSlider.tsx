@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 
 const slides = [
-  { src: '/images/solar-brands-golden-hour.png', alt: 'Trusted rooftop solar panel brands at golden hour' },
+  { src: '/images/solar-home-business.webp', alt: 'Power your home and business with rooftop solar panels and an inverter' },
   { src: '/images/solar-farm-solutions.png', alt: 'Large-scale solar solutions for homes, businesses, schools, industries and farms' },
+  { src: '/images/solar-rural-installation.webp', alt: 'Solar panels and an inverter installed beside fields in rural India' },
+  { src: '/images/solar-commercial-rooftop.webp', alt: 'Rooftop solar panel array and inverter on a commercial building' },
+  { src: '/images/solar-carport.webp', alt: 'Solar panel carport providing covered parking for vehicles' },
 ]
 export function HeroImageSlider() {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
-  const [hovered, setHovered] = useState(false)
-  const [focused, setFocused] = useState(false)
   const [reduced, setReduced] = useState(false)
   useEffect(() => {
     const media = matchMedia('(prefers-reduced-motion: reduce)')
@@ -20,12 +21,12 @@ export function HeroImageSlider() {
     return () => media.removeEventListener('change', update)
   }, [])
   useEffect(() => {
-    if (paused || hovered || focused || reduced) return
-    const timer = setInterval(() => { if (!document.hidden) setIndex(value => (value + 1) % slides.length) }, 6000)
+    if (paused || reduced) return
+    const timer = setInterval(() => { if (!document.hidden) setIndex(value => (value + 1) % slides.length) }, 5000)
     return () => clearInterval(timer)
-  }, [paused, hovered, focused, reduced, index])
+  }, [paused, reduced, index])
   return <div className="hero-scene hero-photo-replacement">
-    <section className="hero-image-slider" aria-label="Solar solutions gallery" aria-roledescription="carousel" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocus={() => setFocused(true)} onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false) }}>
+    <section className="hero-image-slider" aria-label="Solar solutions gallery" aria-roledescription="carousel">
       <div className="hero-slider-window"><div className="hero-slider-track" style={{ transform: `translateX(-${index * 100}%)` }}>{slides.map((slide, i) => <div className="hero-image-slide" key={slide.src} aria-hidden={index !== i}><img src={slide.src} alt={slide.alt} width={1672} height={941} fetchPriority={i === 0 ? 'high' : 'auto'} draggable={false} /></div>)}</div></div>
       <div className="hero-slider-controls">
         <button type="button" aria-label="Previous image" onClick={() => setIndex(value => (value - 1 + slides.length) % slides.length)}><ChevronLeft size={17}/></button>

@@ -15,6 +15,7 @@ import {
   User,
 } from 'lucide-react'
 import { T, useLanguage } from '@/components/language/LanguageProvider'
+import { getWhatsAppUrl } from '@/lib/whatsapp'
 
 const requirements = [
   { en: 'PM Surya Ghar Yojana (Up to ₹78,000 Subsidy)', hi: 'पीएम सूर्य घर मुफ्त बिजली योजना (₹78,000 सब्सिडी)' },
@@ -54,7 +55,6 @@ export function EnquiryPopup({ phone = '89530 69011', copy = defaultCopy }: { ph
   const hi = language === 'hi'
 
   const digits = phone.replace(/\D/g, '')
-  const waNumber = digits.length === 10 ? `91${digits}` : digits
 
   // Listen for 'awadh-enquire' custom events
   useEffect(() => {
@@ -143,7 +143,7 @@ export function EnquiryPopup({ phone = '89530 69011', copy = defaultCopy }: { ph
       }
 
       setLeadId(data.leadId || '')
-      setWaLink(data.whatsappUrl || `https://wa.me/${waNumber}`)
+      setWaLink(data.whatsappUrl || getWhatsAppUrl())
       setSubmitted(true)
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Network error. Please try again or message via WhatsApp.'
@@ -158,9 +158,9 @@ export function EnquiryPopup({ phone = '89530 69011', copy = defaultCopy }: { ph
       {/* Floating Action Buttons (Clean & Modern) */}
       <div className="floating-contact" aria-label="Quick contact links">
         <a
-          href={`https://wa.me/${waNumber}?text=${encodeURIComponent(
+          href={getWhatsAppUrl(
             'Hello! I want a free solar consultation and subsidy check for my property in Mirzapur/UP.'
-          )}`}
+          )}
           target="_blank"
           rel="noreferrer"
           className="floating-wa"

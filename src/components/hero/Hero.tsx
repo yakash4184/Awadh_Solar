@@ -7,7 +7,6 @@ import Link from 'next/link'
 import {
   ArrowRight,
   BadgeCheck,
-  CheckCircle2,
   Leaf,
   Shield,
   Sparkles,
@@ -16,6 +15,7 @@ import {
   Zap,
 } from 'lucide-react'
 import type { SiteContent } from '@/lib/site-content'
+import { getWhatsAppUrl } from '@/lib/whatsapp'
 import { T } from '@/components/language/LanguageProvider'
 import { EnquiryTriggerButton } from '@/components/ui/EnquiryTriggerButton'
 import { RotatingHeroTagline } from '@/components/hero/RotatingHeroTagline'
@@ -52,9 +52,6 @@ const benefits = [
 ]
 
 export function Hero({ content }: { content: SiteContent }) {
-  const digits = content.phone.replace(/\D/g, '')
-  const phone = digits.startsWith('91') && digits.length === 12 ? digits : `91${digits}`
-
   return (
     <section className="hero" aria-labelledby="hero-heading">
       <div className="hero-sun-disc" aria-hidden="true" />
@@ -132,9 +129,9 @@ export function Hero({ content }: { content: SiteContent }) {
           <div className="hero-trust-row">
             <a
               className="hero-whatsapp"
-              href={`https://wa.me/${phone}?text=${encodeURIComponent(
+              href={getWhatsAppUrl(
                 'Hello! I would like to inquire about solar rooftop installation and PM Surya Ghar subsidy in Mirzapur/UP.'
-              )}`}
+              )}
               target="_blank"
               rel="noreferrer"
             >
@@ -142,10 +139,6 @@ export function Hero({ content }: { content: SiteContent }) {
               <T hi="इंजीनियर से WhatsApp पर बात करें">Chat with Solar Specialist on WhatsApp</T>
               <ArrowRight size={14} />
             </a>
-            <span className="hero-trust-pill">
-              <CheckCircle2 size={13} className="text-emerald-500" />
-              <T hi="2,000+ सोलर प्लांट मिर्ज़ापुर व पूर्वांचल में स्थापित">2,000+ Installs in Mirzapur & Eastern UP</T>
-            </span>
           </div>
         </div>
 
@@ -157,11 +150,6 @@ export function Hero({ content }: { content: SiteContent }) {
           </div>
         </aside>
 
-        <div className="hero-caption">
-          <span>01</span>
-          <span className="caption-line" />
-          <span><T hi="आपकी छत • आपकी बिजली">Your Roof • Your Clean Energy</T></span>
-        </div>
       </div>
     </section>
   )

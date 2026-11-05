@@ -3,8 +3,9 @@
 import { FormEvent, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { T, useLanguage } from '@/components/language/LanguageProvider'
+import { getWhatsAppUrl } from '@/lib/whatsapp'
 
-export function ContactForm({ phone = '89530 69011', brand = 'Awadh Enterprises' }: { phone?: string; brand?: string }) {
+export function ContactForm({ brand = 'Awadh Enterprises' }: { brand?: string }) {
   const [message, setMessage] = useState('')
   const { language } = useLanguage()
   function submit(e: FormEvent<HTMLFormElement>) {
@@ -21,13 +22,11 @@ export function ContactForm({ phone = '89530 69011', brand = 'Awadh Enterprises'
       'Residential rooftop solar': 'आवासीय रूफटॉप सोलर', 'Commercial solar': 'व्यावसायिक सोलर', 'Solar panels': 'सोलर पैनल',
       'Inverter or battery': 'इन्वर्टर या बैटरी', 'Maintenance and support': 'रखरखाव और सहायता', Other: 'अन्य',
     }
-    const text = encodeURIComponent(language === 'hi'
+    const text = language === 'hi'
       ? `नमस्ते ${brand}, मेरा नाम ${name} है। मेरा मोबाइल नंबर ${customerPhone} है। मैं ${hindiNeeds[need] ?? need} के बारे में पूछताछ कर रहा/रही हूं।`
-      : `Hello ${brand}, I’m ${name}. My mobile number is ${customerPhone}. I’m enquiring about: ${need}.`)
+      : `Hello ${brand}, I’m ${name}. My mobile number is ${customerPhone}. I’m enquiring about: ${need}.`
     setMessage(language === 'hi' ? 'आपकी पूछताछ के साथ व्हाट्सऐप खुल रहा है। अनुरोध पूरा करने के लिए संदेश भेजें।' : 'Opening WhatsApp with your enquiry. Please send the message to complete your request.')
-    const digits = phone.replace(/\D/g, '')
-    const whatsappNumber = digits.startsWith('91') && digits.length === 12 ? digits : `91${digits}`
-    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank', 'noopener,noreferrer')
+    window.open(getWhatsAppUrl(text), '_blank', 'noopener,noreferrer')
   }
   return <form className="contact-form" onSubmit={submit}>
     <label><T>Your name</T><input name="name" autoComplete="name" placeholder={language === 'hi' ? 'अपना नाम लिखें' : 'Enter your name'} required /></label>
