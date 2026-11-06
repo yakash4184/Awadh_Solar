@@ -71,37 +71,6 @@ export function SunJourney() {
                 }
               )
             })
-
-          if (matchMedia('(min-width: 1000px)').matches) {
-            gsap.to('.energy-track', {
-              xPercent: -60,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.energy-story',
-                start: 'top top+=100',
-                end: '+=1500',
-                scrub: 1,
-                pin: true,
-                invalidateOnRefresh: true,
-              },
-            })
-          }
-
-          document.querySelectorAll<HTMLElement>('.solution-card').forEach((card) => {
-            const move = (e: PointerEvent) => {
-              const b = card.getBoundingClientRect()
-              card.style.transform = `perspective(900px) rotateX(${
-                -(e.clientY - b.top - b.height / 2) / 45
-              }deg) rotateY(${(e.clientX - b.left - b.width / 2) / 45}deg)`
-            }
-            const leave = () => {
-              card.style.transform = ''
-            }
-            if (matchMedia('(pointer:fine)').matches) {
-              card.addEventListener('pointermove', move)
-              card.addEventListener('pointerleave', leave)
-            }
-          })
         })
 
         return () => {
@@ -109,6 +78,22 @@ export function SunJourney() {
           lenis.destroy()
           gsap.ticker.remove(tick)
         }
+      })
+
+      mm.add('(min-width: 1000px) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+        gsap.set('.energy-track', { width: '250%', overflow: 'visible', paddingBottom: 0 })
+        gsap.to('.energy-track', {
+          xPercent: -60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.energy-story',
+            start: 'top top+=100',
+            end: '+=1500',
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+        })
       })
 
       cleanup = () => mm.revert()

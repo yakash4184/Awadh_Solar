@@ -25,7 +25,7 @@ export function HeroImageSlider() {
     const timer = setInterval(() => { if (!document.hidden) setIndex(value => (value + 1) % slides.length) }, 5000)
     return () => clearInterval(timer)
   }, [paused, reduced, index])
-  return <div className="hero-scene hero-photo-replacement">
+  return <div className="hero-gallery">
     <section className="hero-image-slider" aria-label="Solar solutions gallery" aria-roledescription="carousel">
       <div className="hero-slider-window"><div className="hero-slider-track" style={{ transform: `translateX(-${index * 100}%)` }}>{slides.map((slide, i) => <div className="hero-image-slide" key={slide.src} aria-hidden={index !== i}><img src={slide.src} alt={slide.alt} width={1672} height={941} fetchPriority={i === 0 ? 'high' : 'auto'} draggable={false} /></div>)}</div></div>
       <div className="hero-slider-controls">

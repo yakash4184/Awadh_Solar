@@ -1,6 +1,4 @@
 import { HeroImageSlider } from '@/components/hero/HeroImageSlider'
-// Hero 3D scene preserved for future use.
-// import { SceneLoader } from '@/components/experience/SceneLoader'
 import { QuoteButton } from '@/components/experience/QuoteButton'
 import { GreetingClock } from '@/components/ui/GreetingClock'
 import Link from 'next/link'
@@ -55,9 +53,6 @@ export function Hero({ content }: { content: SiteContent }) {
   return (
     <section className="hero" aria-labelledby="hero-heading">
       <div className="hero-sun-disc" aria-hidden="true" />
-      {/* <SceneLoader poster={content.heroPhoto} /> */}
-      <HeroImageSlider />
-
       <div className="hero-content">
         <div className="hero-copy">
           {/* PM Surya Ghar Yojna Live Watch & Subsidy Banner */}
@@ -151,6 +146,7 @@ export function Hero({ content }: { content: SiteContent }) {
         </aside>
 
       </div>
+      <HeroImageSlider />
     </section>
   )
 }

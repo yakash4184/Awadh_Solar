@@ -5,7 +5,6 @@ import { Countdown } from '@/components/experience/Countdown'
 import { ShopVideo } from '@/components/experience/ShopVideo'
 import { EnergyStory } from '@/components/experience/EnergyStory'
 import { SunJourney } from '@/components/experience/SunJourney'
-import { SceneLoader } from '@/components/experience/SceneLoader'
 import { EnquiryPopup } from '@/components/enquiry/EnquiryPopup'
 import Link from 'next/link'
 import {
@@ -124,7 +123,7 @@ export default async function HomePage() {
           }}
         />
 
-        {/* 3D Hero Section */}
+        {/* Hero Section */}
         <Hero content={content} />
 
         <BrandTrustStrip />
@@ -262,7 +261,7 @@ export default async function HomePage() {
         {/* Energy Story with High Contrast */}
         <EnergyStory />
 
-        {/* Products Section with 3D/Interactive View */}
+        {/* Products Section */}
         <section className="products-section" id="products">
           <div className="section-heading">
             <span className="eyebrow"><T>TIER-1 SOLAR HARDWARE</T></span>
@@ -275,9 +274,10 @@ export default async function HomePage() {
             {content.products.map((product) => (
               <article className="public-product-card" id={`product-${product.id}`} key={product.id}>
                 <div className="public-product-image">
-                  <SceneLoader
-                    kind={['panels', 'inverters', 'batteries'].includes(product.id) ? product.id : 'panels'}
-                    poster={product.image}
+                  <SitePhoto
+                    src={product.image}
+                    alt=""
+                    sizes="(max-width: 600px) 90vw, (max-width: 920px) 45vw, (max-width: 1250px) 30vw, 350px"
                   />
                   <span><T>{product.category}</T></span>
                 </div>

@@ -453,6 +453,10 @@ button, a {
   overflow: hidden;
 }
 
+.public-product-image .site-photo {
+  object-fit: contain;
+}
+
 .public-product-image > span {
   position: absolute;
   top: 14px;

@@ -1,4 +1,26 @@
 import { Sun, Grid2X2, Zap, BatteryCharging, House } from 'lucide-react'
 import { T } from '@/components/language/LanguageProvider'
 const steps=[{icon:Sun,en:'It starts with sunlight.',hi:'शुरुआत होती है धूप से।',body:'A renewable source, arriving on your rooftop every day.',bodyHi:'नवीकरणीय ऊर्जा का स्रोत, हर दिन आपकी छत पर।'}, {icon:Grid2X2,en:'Your roof gets to work.',hi:'आपकी छत बने ऊर्जा का स्रोत।',body:'Solar panels convert the sun’s energy into direct-current electricity.',bodyHi:'सोलर पैनल धूप को डीसी बिजली में बदलते हैं।'}, {icon:Zap,en:'Power, made useful.',hi:'ऊर्जा बने उपयोगी बिजली।',body:'An inverter converts it into electricity your appliances can use.',bodyHi:'इन्वर्टर इसे आपके उपकरणों के लिए उपयोगी बिजली में बदलता है।'}, {icon:BatteryCharging,en:'A little energy for later.',hi:'कुछ ऊर्जा बाद के लिए।',body:'Optional batteries store energy in a compatible system.',bodyHi:'अनुकूल सिस्टम में वैकल्पिक बैटरियां ऊर्जा जमा करती हैं।'}, {icon:House,en:'Life carries on. Brighter.',hi:'ज़िंदगी चले, और उज्ज्वल।',body:'A system designed around your home, usage and connection.',bodyHi:'आपके घर, खपत और कनेक्शन के अनुसार तैयार सिस्टम।'}]
-export function EnergyStory(){return <section className="energy-story" id="how-it-works"><div className="energy-heading"><span className="eyebrow"><T hi="धूप से आपके घर तक">FROM SUNLIGHT TO EVERYDAY LIFE</T></span><h2><T hi="एक बेहतर दिन की">The making of</T> <em><T hi="शुरुआत।">a brighter day.</T></em></h2></div><div className="energy-track">{steps.map(({icon:Icon,en,hi,body,bodyHi},i)=><article className="energy-step" key={en}><span className="energy-number">0{i+1} / 05</span><div className="energy-icon"><Icon size={60} strokeWidth={1}/></div><h3><T hi={hi}>{en}</T></h3><p><T hi={bodyHi}>{body}</T></p></article>)}</div></section>}
+
+export function EnergyStory() {
+  return (
+    <section className="energy-story" id="how-it-works">
+      <div className="energy-heading">
+        <span className="eyebrow"><T hi="धूप से आपके घर तक">FROM SUNLIGHT TO EVERYDAY LIFE</T></span>
+        <h2 id="energy-story-heading">
+          <T hi="एक बेहतर दिन की">The making of</T> <em><T hi="शुरुआत।">a brighter day.</T></em>
+        </h2>
+      </div>
+      <div className="energy-track" role="group" aria-labelledby="energy-story-heading" tabIndex={0} data-lenis-prevent-horizontal>
+        {steps.map(({ icon: Icon, en, hi, body, bodyHi }, index) => (
+          <article className="energy-step" key={en}>
+            <span className="energy-number">0{index + 1} / 05</span>
+            <div className="energy-icon"><Icon size={60} strokeWidth={1} aria-hidden="true" /></div>
+            <h3><T hi={hi}>{en}</T></h3>
+            <p><T hi={bodyHi}>{body}</T></p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}

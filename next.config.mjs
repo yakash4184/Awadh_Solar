@@ -16,8 +16,7 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
-  // Allow transpiling of three.js related packages
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', 'gsap'],
+  transpilePackages: ['gsap'],
 }
 
 export default nextConfig
