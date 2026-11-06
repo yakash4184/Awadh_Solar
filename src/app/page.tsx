@@ -12,7 +12,6 @@ import {
   BadgeCheck,
   BatteryCharging,
   Building2,
-  CheckCircle2,
   Factory,
   Headset,
   House,
@@ -224,13 +223,6 @@ export default async function HomePage() {
                   <div>
                     <strong><T hi="सरकारी पंजीकृत सोलर पार्टनर">Govt. Registered Partner</T></strong>
                     <small><T hi="UPPCL नेट-मीटरिंग अनुमोदित">UPPCL Net-Metering Approved</T></small>
-                  </div>
-                </div>
-                <div className="team-badge-item">
-                  <CheckCircle2 size={20} className="text-emerald-600" />
-                  <div>
-                    <strong><T hi="2,000+ सफल सोलर प्लांट">2,000+ Installed Plants</T></strong>
-                    <small><T hi="मिर्ज़ापुर एवं पूर्वांचल में">Across Mirzapur & Eastern UP</T></small>
                   </div>
                 </div>
                 <div className="team-badge-item">
